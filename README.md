@@ -8,5 +8,5 @@ You are not allowed to use more than 5 functions per file
 
 Prototypes of all functions should be included in the header file.
 
-Create a man page for your functions
+Create a man page for your printf functions
 # printf

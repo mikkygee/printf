@@ -7,15 +7,11 @@
  * @fmt_identifier: format identifier
  * @fmt_print_func: pointer to function that prints in the format of @format
  */
-
-struct fmt_struct
+typedef struct specifier
 {
-	char fmt_identifier;
-	int (*fmt_print_func)(va_list *arg_list);
-};
-
-typedef struct fmt_struct fmt_struct_data_type;
-
+	char *valid;
+	int (*f)(va_list);
+} spec;
 int _putchar(char c);
 int _printf(const char *format, ...);
 int print_c(va_list args);

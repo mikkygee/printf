@@ -1,7 +1,7 @@
-#ifndef PRINTF_FUNCTIONS_H_
-#define PRINTF_FUNCTIONS_H_
+#ifndef HOLBERTON_H_
+#define HOLBERTON_H_
 #include <stdarg.h>
-#include <stdlib.h>
+
 /**
  * struct fmt_struct - format-type class/object/struct
  * @fmt_identifier: format identifier
@@ -18,19 +18,10 @@ typedef struct fmt_struct fmt_struct_data_type;
 
 int _putchar(char c);
 int _printf(const char *format, ...);
-int print_unsigned(va_list *arg);
-int print_oct(va_list *arg);
-int print_hex_base(va_list arg, char _case);
-int print_hex(va_list *arg);
-int print_HEX(va_list *arg);
-int print_unsignedIntToHex(unsigned int num, char _case);
-int (*get_fmt_func(char identifier))(va_list *);
-
-int print_char(va_list *arg);
-int print_percentage_and_char(char c);
-int print_int(va_list *arg_list);
-/* int print_float(va_list *arg); */
-int print_string(va_list *arg);
-int print_normal_char(char c);
-int print_percentage(va_list *arg);
+int print_c(va_list args);
+int print_s(va_list args);
+int print_d(va_list args);
+int print_i(va_list args);
+int print_percent(va_list args);
+int (*get_func(char x))(va_list args);
 #endif

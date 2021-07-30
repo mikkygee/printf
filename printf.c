@@ -1,44 +1,56 @@
-#include <stdarg.h>
 #include "holberton.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <stddef.h>
 
 /**
- * _printf - produces output according to a format
- * @format: pointer to a string and may include formats
- * Return: integer, return number of printed characters
+ * _printf - recreates the printf function
+ * 
+ * @format: string with format specifier
+ *
+ * Return: number of characters printed
  */
 
 int _printf(const char *format, ...)
 {
-	unsigned int i = 0, result = 0;
-	va_list args;
-	int (*fmt_func)(va_list *);
-
-	if (!format || (format[0] == '%' && format[1] == '\0'))
-		return (-1);
-
-	va_start(args, format);
-
-	while (format && format[i] != '\0')
+	if (format != NULL)
 	{
-		if (format[i] == '%')
-		{
-			i++;
-			fmt_func = get_fmt_func(format[i]);
+		int count = 0, i;
+		int (*m)(va_list);
+		va_list args;
 
-			if (fmt_func)
-				result += fmt_func(&args);
-			else if (format[i] != ' ')
-				result += print_percentage_and_char(format[i]);
-		}
-		else
+		va_start(args, format);
+		i = 0;
+		if (format[0] == '%' && format[1] == '\0')
+			return (-1);
+		while (format != NULL && format[i] != '\0')
 		{
-			result += print_normal_char(format[i]);
+			if (format[i] == '%')
+			{
+				if (format[i + 1] == '%')
+				{
+					count += _putchar(format[i]);
+					i += 2;
+				}
+				else
+				{
+					m = get_func(format[i + 1]);
+					if (m)
+						count += m(args);
+					else
+						count = _putchar(format[i]) + _putchar(format[i + 1]);
+					i += 2;
+				}
+			}
+			else
+			{
+				count += _putchar(format[i]);
+				i++;
+			}
 		}
-
-		i++;
+		va_end(args);
+		return (count);
 	}
-
-	va_end(args);
-
-	return (result);
+	return (-1);
 }

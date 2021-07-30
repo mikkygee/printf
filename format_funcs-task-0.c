@@ -1,76 +1,102 @@
 #include <stdarg.h>
 #include "holberton.h"
+#include <stdio.h>
 
 /**
- * print_percentage_and_char - print % and a char
- * @c: char input
- * Return: 2
+ * print_c - prints character
+ * @args: character argument
+ * Return: number of characters
  */
 
-int print_percentage_and_char(char c)
+int print_c(va_list args)
 {
-	_putchar('%');
-	_putchar(c);
+	int c;
 
-	return (2);
+	c = va_arg(args, int);
+	return (_putchar(c));
 }
-
 /**
- * print_normal_char - prints a char that isn't from va_list
- * @c: char
- * Return: 1, which is the count of character printed
+ * print_s - prints a string
+ * @args: string  argument
+ * Return: number of characters
  */
-int print_normal_char(char c)
+int print_s(va_list args)
 {
-	_putchar(c);
+	int i, count = 0;
+	char *str;
 
-	return (1);
+	i = 0;
+	str = va_arg(args, char*);
+	if (str == NULL)
+		str = "(null)";
+	while (str[i] != '\0')
+	{
+		_putchar(str[i]);
+		i++;
+		count++;
+	}
+	return (count);
 }
-
 /**
- * print_char - prints a char
- * @arg: pointer to a char
- * Return: integer, number of characters printed
+ * print_percent - pass the percent sing
+ * @args: string  argument
+ * Return: return the percent sing
+ *
  */
-
-int print_char(va_list *arg)
-{
-	_putchar(va_arg(*arg, int));
-
-	return (1);
-}
-
-/**
- * print_string - prints a string
- * @arg: pointer to string
- * Return: integer, number of characters printed
- */
-
-int print_string(va_list *arg)
+int print_percent(va_list args)
 {
 	char *str;
-	int i;
 
-	str = va_arg(*arg, char *);
-
-	if (!str)
-		str = "(null)";
-
-	for (i = 0; str[i] != '\0'; i++)
-		_putchar(str[i]);
-
-	return (i);
+	str = "%";
+	if (va_arg(args, int) == *str)
+	{
+		return (*str);
+	}
+	return (*str);
 }
 
 /**
- * print_percentage - prints %
- * @arg: pointer
- * Return: 1,
+ * print_d - prints a decimal
+ * @args: decimal argument
+ * Return: counter
+ */
+int print_d(va_list args)
+{
+
+	unsigned int absolute, aux, countnum, count;
+	int n;
+
+	count = 0;
+	n = va_arg(args, int);
+		if (n < 0)
+		{
+			absolute = (n * -1);
+			count += _putchar('-');
+		}
+		else
+			absolute = n;
+
+	aux = absolute;
+	countnum = 1;
+	while (aux > 9)
+	{
+		aux /= 10;
+		countnum *= 10;
+	}
+	while (countnum >= 1)
+	{
+		count += _putchar(((absolute / countnum) % 10) + '0');
+		countnum /= 10;
+	}
+	return (count);
+}
+/**
+ * print_i - prints integer
+ * @args: integer argument
+ * Return: the decimal function
  */
 
-int print_percentage(va_list *arg)
+int print_i(va_list args)
 {
-	(void)arg;
-	_putchar('%');
-	return (1);
+	return (print_d(args));
 }
